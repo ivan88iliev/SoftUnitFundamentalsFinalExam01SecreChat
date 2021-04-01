@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+
+namespace SoftUnitFundamentalsFinalExam
+{
+    class Program
+    {
+        private static string casint;
+
+        static void Main(string[] args)
+        {
+            //SoftUnitFundamentalsFinalExam01. Secret Chat
+
+            string text = Console.ReadLine();
+
+            while (true)
+            {
+                string[] command = Console.ReadLine().Split(":|:", StringSplitOptions.RemoveEmptyEntries).ToArray();
+                if (command[0] == "Reveal")
+                {
+                    break;
+                }
+                switch (command[0])
+                {
+                    case "InsertSpace"://•	InsertSpace:|:{index}
+                        text = text.Insert(int.Parse(command[1]), " ");
+                        Console.WriteLine(text);
+                        break;
+                
+                    case "Reverse"://•	Reverse:|:{substring}
+                        if (text.Contains(command[1]))
+                        {
+                            int textIndex = text.IndexOf(command[1]);
+                            text = text.Remove(textIndex, command[1].Length);
+                            string reversText = ReverseString(command[1]);
+                            text += reversText;
+                            Console.WriteLine(text);
+                        }
+                        else
+                        {
+                            Console.WriteLine("error");
+                        }
+                        break;
+                
+                    case "ChangeAll"://•	ChangeAll:|:{substring}:|:{replacement}
+                        text = text.Replace(command[1], command[2]);
+                        Console.WriteLine(text);
+                        break;
+                }
+
+
+            }
+
+            Console.WriteLine($"You have a new text message: {text}");
+
+            //
+        }
+        public static string ReverseString(string inputText)
+        {
+            string output = "";
+            for (int i = inputText.Length - 1; i >= 0; i--)
+            {
+                output += inputText[i];
+            }
+            return output;
+        }
+    }
+}
